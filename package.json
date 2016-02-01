@@ -1,0 +1,44 @@
+{
+  "name": "web-boilerplate",
+  "version": "1.0.0",
+  "description": "Web Boilerplate",
+  "author": "Clemens Stolle <klaemo@fastmail.fm>",
+  "license": "MIT",
+  "private": true,
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "parallelshell 'nodemon -i assets/ -i public/ server.js' 'npm run -s watch'",
+    "pretest": "npm prune",
+    "test": "mocha -R spec",
+    "test:watch": "npm run -s test -- -w",
+    "watch": "parallelshell 'npm run -s watch:js' 'npm run -s watch:css'",
+    "watch:js": "watchify -d assets/js/index.js -o public/bundle.js",
+    "watch:css": "npm run -s postcss -- -m -w -o public/styles.css",
+    "compile": "parallelshell 'npm run compile:css' 'npm run compile:js'",
+    "compile:js": "NODE_ENV=production browserify -d -p [minifyify --map bundle.map --output public/bundle.map] assets/js/index.js -o public/bundle.js",
+    "compile:css": "npm run -s postcss | cssnano > public/styles.css",
+    "postcss": "postcss -u postcss-import -u postcss-cssnext assets/css/index.css"
+  },
+  "browserify": {
+    "transform": [
+      "babelify"
+    ]
+  },
+  "devDependencies": {
+    "babel-preset-es2015": "6.3.13",
+    "babelify": "7.2.0",
+    "browserify": "13.0.0",
+    "cssnano-cli": "1.0.3",
+    "minifyify": "7.2.1",
+    "mocha": "2.4.5",
+    "nodemon": "1.8.1",
+    "normalize.css": "3.0.3",
+    "parallelshell": "2.0.0",
+    "postcss": "5.0.14",
+    "postcss-cli": "2.5.0",
+    "postcss-cssnext": "2.4.0",
+    "postcss-import": "8.0.2",
+    "watchify": "3.7.0"
+  }
+}
