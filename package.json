@@ -13,12 +13,15 @@
     "test": "mocha -R spec",
     "test:watch": "npm run -s test -- -w",
     "watch": "parallelshell 'npm run -s watch:js' 'npm run -s watch:css'",
-    "watch:js": "watchify -d assets/js/index.js -o public/bundle.js",
-    "watch:css": "npm run -s postcss -- -m -w -o public/styles.css",
-    "compile": "parallelshell 'npm run compile:css' 'npm run compile:js'",
-    "compile:js": "NODE_ENV=production browserify -d -p [minifyify --map bundle.map --output public/bundle.map] assets/js/index.js -o public/bundle.js",
-    "compile:css": "npm run -s postcss | cssnano > public/styles.css",
-    "postcss": "postcss -u postcss-import -u postcss-cssnext assets/css/index.css"
+    "watch:js": "watchify -d assets/js/index.js -o public/js/bundle.js",
+    "watch:css": "npm run -s postcss -- -m -w -o public/css/styles.css",
+    "compile": "parallelshell 'npm run compile:css' 'npm run compile:js' 'npm run images'",
+    "compile:js": "NODE_ENV=production browserify -d -p [minifyify --map /js/bundle.map --output public/js/bundle.map] assets/js/index.js -o public/js/bundle.js",
+    "compile:css": "npm run -s postcss | cssnano > public/css/styles.css",
+    "postcss": "postcss -u postcss-import -u postcss-cssnext assets/css/index.css",
+    "images": "imagemin assets/img public/img",
+    "precompile": "rimraf public/* && mkdir public/{css,js,img}",
+    "postcompile": "hashmark -l 8 -r -c public -m assets.json '**/*.{js,css,png,jpg,svg}' '{dir}/{name}.{hash}{ext}' | replaceinfiles -S -s 'public/css/*.css' -d '{dir}/{base}'"
   },
   "browserify": {
     "transform": [
@@ -26,10 +29,13 @@
     ]
   },
   "devDependencies": {
+    "@songkick/replaceinfiles": "1.1.4",
     "babel-preset-es2015": "6.3.13",
     "babelify": "7.2.0",
     "browserify": "13.0.0",
     "cssnano-cli": "1.0.3",
+    "hashmark": "3.1.0",
+    "imagemin-cli": "2.1.0",
     "minifyify": "7.2.1",
     "mocha": "2.4.5",
     "nodemon": "1.8.1",
@@ -39,6 +45,7 @@
     "postcss-cli": "2.5.0",
     "postcss-cssnext": "2.4.0",
     "postcss-import": "8.0.2",
+    "rimraf": "2.5.1",
     "watchify": "3.7.0"
   },
   "dependencies": {}
