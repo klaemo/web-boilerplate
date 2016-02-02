@@ -12,8 +12,15 @@ A bunch of `npm scripts` plumbing on top of
 
 ## Installation
 
+Download this project and run:
 ```
 npm install
+```
+
+or use this one-liner:
+
+```
+mkdir web-boilerplate && cd web-boilerplate && curl -L# https://github.com/klaemo/web-boilerplate/archive/master.zip | tar xz --strip 1 && npm install
 ```
 
 ## Development
