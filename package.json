@@ -40,5 +40,6 @@
     "postcss-cssnext": "2.4.0",
     "postcss-import": "8.0.2",
     "watchify": "3.7.0"
-  }
+  },
+  "dependencies": {}
 }
