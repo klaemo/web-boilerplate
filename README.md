@@ -1,7 +1,8 @@
 Web Boilerplate
 ===
 
-A bunch of `npm scripts` plumbing on top of
+A bunch of `npm scripts` plumbing for my frontend projects so I don't have to set this up from
+scratch every time.
 
 * Bundling and minifcation of JS ([browserify](http://browserify.org))
 * ES6 transpilation with [babel](https://babeljs.io/)
@@ -43,6 +44,13 @@ Everything ends up in `public` and is ready to be deployed somewhere
 ```
 npm run compile
 ```
+
+## Possible enhancements:
+
+* https://www.browsersync.io
+* https://github.com/zertosh/errorify
+* https://github.com/addyosmani/critical
+* https://github.com/AgentME/browserify-hmr
 
 ## License
 MIT
